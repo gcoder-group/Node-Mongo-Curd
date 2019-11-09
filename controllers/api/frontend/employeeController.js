@@ -1,5 +1,5 @@
-var employeeModel = require('../../../models/employeeModel')
 var employeeRepository = require('../../../Repositories/frontend/employeeRepository')
+var ObjectId = require('mongoose').Types.ObjectId
 
 /* GET  list  */
 exports.index = async(req,res,next)=>{
@@ -25,9 +25,6 @@ exports.create = (req,res,next)=>{
 exports.store = async (req,res,next)=>{
     let response = {}
 
-    
-
-    
     let input = {}
     input.data = {
         name : req.body.name,
@@ -49,6 +46,12 @@ exports.edit = async(req,res,next)=>{
     
     let response={}
     let id = req.params.id;
+    if(!ObjectId.isValid(id)){
+        response.data = null
+        response.msg = 'No records with this given id : '+id
+        response.status = 201
+        return res.send(response)
+    }
     data = await employeeRepository.getById(id); 
 
     response.data = data.data
@@ -63,6 +66,12 @@ exports.update = async(req,res,next)=>{
     let response={}
 
     let id = req.params.id;
+    if(!ObjectId.isValid(id)){
+        response.data = null
+        response.msg = 'No records with this given id : '+id
+        response.status = 201
+        return res.send(response)
+    }
     let query = {'_id':id};
     let update = {
         name : req.body.name,
@@ -89,7 +98,13 @@ exports.update = async(req,res,next)=>{
 exports.destroy = async (req,res,next)=> {
     let response = {}
     var id = req.params.id;
-
+    if(!ObjectId.isValid(id)){
+        response.data = null
+        response.msg = 'No records with this given id : '+id
+        response.status = 201
+        return res.send(response)
+    }
+    
     data = await employeeRepository.destroy(id); 
 
     response.data = data.data
