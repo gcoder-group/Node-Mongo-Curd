@@ -8,7 +8,7 @@ exports.index = async(req,res,next)=>{
     response.data = data.data
     response.msg = 'Successfully fetched!'
     response.status = 200
-    res.send(response) 
+    res.json(response) 
 }
 
 /* fetch the data for creating  record page */
@@ -18,7 +18,7 @@ exports.create = (req,res,next)=>{
     response.status = 200
     response.data = null
     response.msg = 'Successfully fetched!'
-    res.send(response) 
+    res.json(response) 
 } 
 
 /* Create a new record */
@@ -38,7 +38,7 @@ exports.store = async (req,res,next)=>{
     response.msg = 'Successfully Created!'
     response.status = 200
     
-    res.send(response) 
+    res.json(response) 
 }
 
 /* fetch the data for editing  record page */
@@ -50,14 +50,14 @@ exports.edit = async(req,res,next)=>{
         response.data = null
         response.msg = 'No records with this given id : '+id
         response.status = 201
-        return res.send(response)
+        return res.json(response)
     }
     data = await employeeRepository.getById(id); 
 
     response.data = data.data
     response.msg = 'Successfully fetched!'
     response.status = 200
-    res.send(response)
+    res.json(response)
 
  } 
 
@@ -70,7 +70,7 @@ exports.update = async(req,res,next)=>{
         response.data = null
         response.msg = 'No records with this given id : '+id
         response.status = 201
-        return res.send(response)
+        return res.json(response)
     }
     let query = {'_id':id};
     let update = {
@@ -91,7 +91,7 @@ exports.update = async(req,res,next)=>{
     response.msg = 'Successfully updated!'
     response.status = 200
 
-    res.send(response)
+    res.json(response)
 }
 
 /* Delete the record */
@@ -102,7 +102,7 @@ exports.destroy = async (req,res,next)=> {
         response.data = null
         response.msg = 'No records with this given id : '+id
         response.status = 201
-        return res.send(response)
+        return res.json(response)
     }
     
     data = await employeeRepository.destroy(id); 
@@ -111,5 +111,5 @@ exports.destroy = async (req,res,next)=> {
     response.msg = 'Successfully deleted!'
     response.status = 200
     
-    return res.send(response)
+    return res.json(response)
 }
